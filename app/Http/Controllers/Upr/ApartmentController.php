@@ -42,9 +42,7 @@ class ApartmentController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		// dd($request->all());
 		$data = $request->all();
-		// dd($data["cover_img"]);
 
 		if (empty($data["cover_img"])) {
 			$path = null;
@@ -82,18 +80,15 @@ class ApartmentController extends Controller
 		$saved = $newApartment->save();
 		$apartmentId = $newApartment->id;
 
-		// dd($apartmentId);
 		if (!$saved) {
 			return redirect()->back()->withInput();
 		}
 
 		if (!empty($data['services'])) {
-			  $newApartment->services()->attach($data['services']);
+			$newApartment->services()->attach($data['services']);
 		}
 
-
-		// return redirect()->route('upr.images.create', $apartmentId);
-		  return view('upr.image-upload', compact("apartmentId"));
+			return view('upr.image-upload', compact("apartmentId"));
 	}
 
 	/**
@@ -107,8 +102,8 @@ class ApartmentController extends Controller
 		if (empty($apartment)) {
 			abort('404');
 		}
-		$apartment->views += 1;
-		$apartment->update();
+		// $apartment->views += 1;
+		// $apartment->update();
 
 		return view('upr.apartments.show', compact('apartment'));
 	}
@@ -127,9 +122,9 @@ class ApartmentController extends Controller
 		}
 		$services = Service::all();
 		$data = [
-		   'apartment' => $apartment,
-		   'services' => $services
-	   ];
+			'apartment' => $apartment,
+			'services' => $services
+		];
 		return view('upr.apartments.edit', $data);
 	}
 
@@ -143,7 +138,6 @@ class ApartmentController extends Controller
 	public function update(Request $request, Apartment $apartment)
 	{
 		$data = $request->all();
-  // dd($request->all());
 		if (empty($data["cover_img"])) {
 			$path = $apartment->cover_img;
 		} else {
@@ -160,18 +154,17 @@ class ApartmentController extends Controller
 		}
 
 		$request->validate([
-		  'title' => 'string|max:70',
-		  'description' => 'string|nullable|max:2000',
-		  'n_rooms' => 'numeric|required|min:1',
-		  'n_baths' => 'numeric|required|min:1',
-		  'sq_meters' => 'numeric|required|min:10',
-		  'address' => 'string|required|max:110',
-		  'price' => 'numeric|required|min:0|max:9999',
-		  'active' => 'required|boolean',
-		  'cover_img' => 'image|nullable'
+			'title' => 'string|max:70',
+			'description' => 'string|nullable|max:2000',
+			'n_rooms' => 'numeric|required|min:1',
+			'n_baths' => 'numeric|required|min:1',
+			'sq_meters' => 'numeric|required|min:10',
+			'address' => 'string|required|max:110',
+			'price' => 'numeric|required|min:0|max:9999',
+			'active' => 'required|boolean',
+			'cover_img' => 'image|nullable'
 		]);
 
-		// $apartment->fill($data);
 		$apartment->title = $data['title'];
 		$apartment->description = $data['description'];
 		$apartment->n_rooms = $data['n_rooms'];
@@ -191,7 +184,7 @@ class ApartmentController extends Controller
 		}
 
 		if (!empty($data['services'])) {
-			  $apartment->services()->sync($data['services']);
+			$apartment->services()->sync($data['services']);
 		}
 
 		return redirect()->route('upr.apartments.show', $apartment);
