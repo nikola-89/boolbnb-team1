@@ -37055,6 +37055,62 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 $(document).ready(function () {
+  var oldquery;
+  $("#address").keyup(function (event) {
+    var query = event.target.value;
+    setTimeout(function () {
+      if (query == oldquery) {
+        console.log(query);
+        $.ajax({
+          url: "https://api.tomtom.com/search/2/search/" + query + ".json?",
+          method: "GET",
+          data: {
+            "typeahead": true,
+            "lat": 42.66,
+            "lon": 12.66,
+            "language": "it-IT",
+            "idxSet": "Geo,Str",
+            "key": "hybTDScBzqzH9mWgKjU0mSeOf7eDO4AV"
+          },
+          success: function success(response) {
+            var suggestions = [];
+
+            for (var i = 0; suggestions.length < 5 && response.results[i]; i++) {
+              if (response.results[i].type == "Geography") {
+                if (response.results[i].entityType == "Municipality") {
+                  suggestions.push({
+                    "address": response.results[i].address.freeformAddress,
+                    "lat": response.results[i].position.lat,
+                    "lon": response.results[i].position.lon
+                  });
+                }
+              } else {
+                suggestions.push({
+                  "address": response.results[i].address.freeformAddress,
+                  "lat": response.results[i].position.lat,
+                  "lon": response.results[i].position.lon
+                });
+              }
+            }
+
+            $(".dropdown-address").html("");
+            $(".dropdown-address").removeClass("hidden");
+
+            for (var index in suggestions) {
+              $(".dropdown-address").append("<p>" + suggestions[index].address + "</p>");
+            }
+          },
+          error: function error() {
+            console.log("error");
+          }
+        });
+      }
+    }, 600);
+    oldquery = query;
+  });
+  $(document).on("click", function (event) {
+    $(".dropdown-address").addClass("hidden");
+  });
   var latitude = $("#map").attr("data-lat");
   var longitude = $("#map").attr("data-lon");
   console.log(longitude);
