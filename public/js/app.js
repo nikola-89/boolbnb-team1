@@ -37058,6 +37058,7 @@ $(document).ready(function () {
   var oldquery;
   $("#address").keyup(function (event) {
     var query = event.target.value;
+    oldquery = query;
     setTimeout(function () {
       if (query == oldquery) {
         console.log(query);
@@ -37106,7 +37107,6 @@ $(document).ready(function () {
         });
       }
     }, 600);
-    oldquery = query;
   });
   $(document).on("click", function (event) {
     $(".dropdown-address").addClass("hidden");
