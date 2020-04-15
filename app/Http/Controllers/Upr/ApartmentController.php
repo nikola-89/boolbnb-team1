@@ -173,6 +173,7 @@ class ApartmentController extends Controller
 		$apartment->address = $data['address'];
 		$apartment->latitude = $data['latitude'];
 		$apartment->longitude = $data['longitude'];
+		$apartment->active = $data['active'];
 		$apartment->price = $data['price'];
 
 		$apartment->cover_img = $path;
