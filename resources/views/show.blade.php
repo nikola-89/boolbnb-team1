@@ -53,6 +53,8 @@
           <p>Nessun servizio aggiuntivo</p>
         @endforelse
     </div>
+    <div id='map' class='map' data-lat="{{$apartment->latitude}}" data-lon="{{$apartment->longitude}}"></div>
+
 </div>
 
 

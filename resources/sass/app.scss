@@ -6,3 +6,25 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+#map {
+    width: 400px;
+    height: 300px;
+}
+
+.dropdown-address {
+  position: absolute;
+  left: 6px;
+  top: 68px;
+  width: 100%;
+  min-height: 50px;
+  background-color: white;
+  padding: 5px 10px;
+  margin-bottom: 0;
+  z-index: 2;
+  box-shadow: 2px 2px 6px grey;
+}
+
+.hidden {
+  display: none;
+}

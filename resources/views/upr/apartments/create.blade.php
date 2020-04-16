@@ -56,12 +56,15 @@
             </div>
             <div class="form-group col-md-5">
                 <label for="address">Indirizzo</label>
-                <input class="form-control @error("address") is-invalid @enderror" type="text" name="address" required minlength="4" maxlength="255">
+                <input id="address" class="form-control @error("address") is-invalid @enderror" type="text" name="address" required minlength="4" maxlength="255">
                   @error("address")
                     <span class="invalid-feedback d-block" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+              <div class="dropdown-address hidden">
+
+              </div>
             </div>
             <div class="form-group col-md-3">
                 <label for="latitude">Latitudine</label>
